@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three Brother Law</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans">
+
+  <!-- Navbar -->
+  <header class="fixed w-full bg-white shadow z-50">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <div class="flex items-center space-x-2">
+        <img src="https://via.placeholder.com/40" alt="Logo" class="w-10 h-10">
+        <span class="font-bold text-lg">Three Brother Law</span>
+      </div>
+      <nav class="space-x-6 hidden md:flex">
+        <a href="#about" class="hover:text-gray-600">About Us</a>
+        <a href="#services" class="hover:text-gray-600">Services</a>
+        <a href="#testimony" class="hover:text-gray-600">Testimony</a>
+        <a href="#location" class="hover:text-gray-600">Location</a>
+        <a href="#contact" class="hover:text-gray-600">Contact</a>
+        <a href="#" class="hover:text-gray-600">Link</a>
+      </nav>
+      <div class="space-x-3">
+        <button class="px-4 py-2 border rounded hover:bg-gray-100">Sign in</button>
+        <button class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Register</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative h-[400px] flex items-center justify-center bg-cover bg-center" style="background-image: url('https://via.placeholder.com/1200x400');">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative z-10 text-center text-white">
+      <h1 class="text-4xl font-bold">Three Brother Law</h1>
+      <p class="text-lg mt-2">Law Firm & Lawyer Services</p>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="py-16 px-6 container mx-auto">
+    <h2 class="text-2xl font-bold mb-4">About us</h2>
+    <p class="text-gray-700 leading-relaxed">
+      Three Brother Law is a dedicated law firm founded on the principles of integrity, professionalism, and unwavering commitment to justice. 
+      Established by three brothers with diverse legal expertise, the firm provides comprehensive legal services covering civil, criminal, 
+      corporate, and family law matters. With a client-centered approach, Three Brother Law emphasizes clear communication, tailored strategies, 
+      and practical solutions to meet the unique needs of individuals, businesses, and organizations. Guided by strong ethical values and a passion 
+      for advocacy, the firm strives to protect clients’ rights, resolve disputes effectively, and deliver results with the highest standards of excellence.
+    </p>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-16 bg-gray-50 px-6">
+    <div class="container mx-auto">
+      <h2 class="text-2xl font-bold mb-8">Our Services</h2>
+      <p class="mb-8 text-gray-600">Services comes with reasonable price</p>
+      <div class="space-y-6">
+        <div class="flex items-center bg-white p-4 rounded-lg shadow">
+          <img src="https://via.placeholder.com/100" class="w-24 h-24 rounded mr-6" alt="">
+          <div>
+            <h3 class="text-lg font-semibold">Filing for divorce.</h3>
+            <p class="text-gray-600">Assisting clients in submitting divorce petitions and representing them in court.</p>
+            <button class="mt-2 px-3 py-1 bg-gray-800 text-white rounded hover:bg-gray-700">Click Here</button>
+          </div>
+        </div>
+        <div class="flex items-center bg-white p-4 rounded-lg shadow">
+          <img src="https://via.placeholder.com/100" class="w-24 h-24 rounded mr-6" alt="">
+          <div>
+            <h3 class="text-lg font-semibold">Land dispute or property division.</h3>
+            <p class="text-gray-600">Handling conflicts related to land ownership, boundaries, or inheritance.</p>
+            <button class="mt-2 px-3 py-1 bg-gray-800 text-white rounded hover:bg-gray-700">Click Here</button>
+          </div>
+        </div>
+        <div class="flex items-center bg-white p-4 rounded-lg shadow">
+          <img src="https://via.placeholder.com/100" class="w-24 h-24 rounded mr-6" alt="">
+          <div>
+            <h3 class="text-lg font-semibold">Handling accident cases.</h3>
+            <p class="text-gray-600">Providing legal support for traffic accidents, compensation claims, or liability issues.</p>
+            <button class="mt-2 px-3 py-1 bg-gray-800 text-white rounded hover:bg-gray-700">Click Here</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimony -->
+  <section id="testimony" class="py-16 px-6 container mx-auto">
+    <h2 class="text-2xl font-bold mb-8">Testimony</h2>
+    <p class="mb-8 text-gray-600">Our happy customer testimony</p>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="https://via.placeholder.com/80" class="w-16 h-16 rounded-full mb-4" alt="">
+        <p class="text-gray-700">Clients of Three Brother Law appreciate the firm’s professionalism and clear guidance in handling disputes.</p>
+        <span class="block mt-2 font-semibold">Rudi</span>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="https://via.placeholder.com/80" class="w-16 h-16 rounded-full mb-4" alt="">
+        <p class="text-gray-700">Clients commend Three Brother Law for its reliable support in accident cases, valuing the firm’s expertise.</p>
+        <span class="block mt-2 font-semibold">Bambang</span>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="https://via.placeholder.com/80" class="w-16 h-16 rounded-full mb-4" alt="">
+        <p class="text-gray-700">Clients trust Three Brother Law in divorce cases for its compassionate approach and fair resolutions.</p>
+        <span class="block mt-2 font-semibold">Joko & Suwarni</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 bg-gray-50 px-6">
+    <div class="container mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Our Contact</h2>
+        <p class="mb-2"><strong>Email:</strong> threebrotherlaw@gmail.com</p>
+        <p class="mb-2"><strong>Office:</strong> Jl. Sawunggaling II Desa.Sambisari, Kec. Taman, Kabupaten Sidoarjo, Jawa Timur 61257</p>
+        <p><strong>Phone:</strong> +6282245059975</p>
+      </div>
+      <div>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.8240995484743!2d112.701!3d-7.351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f96d9f3b7d75%3A0xa7!2sSidoarjo!5e0!3m2!1sen!2sid!4v1694500000000!5m2!1sen!2sid" 
+          width="100%" 
+          height="300" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-white py-8 border-t">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+      <p>&copy; 2025 Three Brother Law</p>
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
