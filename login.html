@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Three Brother Law</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Navbar -->
+    <header class="fixed w-full bg-white shadow z-50">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+        <div class="flex items-center space-x-2">
+        <a href="index.html">
+            <img src="./assets/img/logo.png" alt="Logo" class="w-10 h-10">
+        </a>
+        </div>
+        <nav class="space-x-6 hidden md:flex text-gray-700">
+        <a href="index.html#about" class="hover:text-gray-900">About Us</a>
+        <a href="index.html#services" class="hover:text-gray-900">Services</a>
+        <a href="index.html#testimony" class="hover:text-gray-900">Testimony</a>
+        <a href="index.html#location" class="hover:text-gray-900">Location</a>
+        <a href="index.html#contact" class="hover:text-gray-900">Contact</a>
+        <a href="index.html#link" class="hover:text-gray-900">Link</a>
+        </nav>
+        <div class="space-x-3">
+        <a href="login.html" class="px-4 py-2 border rounded hover:bg-gray-100">Sign In</a>
+        <a href="register.html" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Register</a>
+        </div>
+    </div>
+    </header>
+
+
+  <!-- Background -->
+  <div class="min-h-screen flex items-center justify-center bg-cover bg-center" 
+       style="background-image: url('./assets/img/banner.png');">
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- Register Box -->
+    <div class="relative z-10 bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
+        <!-- Logo & Title -->
+        <div class="text-center mb-6">
+            <img src="./assets/img/logo.png" alt="Logo" class="w-16 h-16 mx-auto mb-2">
+            <h2 id="welcomeTitle" class="text-2xl font-bold">Welcome Back!</h2>
+            <p class="text-gray-600">Sign-in or Create an account</p>
+        </div>
+
+        <!-- Form -->
+        <form id="loginForm" class="space-y-4">
+            <!-- Username -->
+            <div class="flex items-center border rounded-lg px-3 py-2">
+                <i class="fa-regular fa-user text-gray-500 mr-3"></i>
+                <input type="text" name="username" placeholder="Username" required class="w-full outline-none">
+            </div>
+
+            <!-- Password -->
+            <div class="flex items-center border rounded-lg px-3 py-2 relative">
+                <i class="fa-solid fa-lock text-gray-500 mr-3"></i>
+                <input type="password" id="password" name="password" placeholder="Password" required class="w-full outline-none">
+                <i class="fa-regular fa-eye absolute right-3 cursor-pointer text-gray-500" id="togglePassword"></i>
+            </div>
+
+            <!-- Forgot password -->
+            <div class="text-right">
+                <a href="#" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
+            </div>
+
+            <!-- Login button -->
+            <button type="submit" class="w-full py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition">
+                Login
+            </button>
+        </form>
+
+        <!-- Dropdown login as -->
+        <div class="relative mt-6">
+            <button id="dropdownButton" 
+                    class="w-full py-3 border rounded-lg flex justify-between items-center text-gray-700 hover:bg-gray-100">
+                Login as an
+                <i class="fa-solid fa-chevron-down ml-2"></i>
+            </button>
+            <div id="dropdownMenu" class="hidden absolute left-0 right-0 mt-2 bg-white border rounded-lg shadow-lg">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Employee</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Lawyer</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Administrator</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<!-- Footer -->
+  <footer class="bg-white py-16 border-t">
+    <div class="container mx-auto grid md:grid-cols-4 gap-8 text-sm text-gray-700">
+      <div>
+        <h3 class="font-bold mb-4">Three Brother Law</h3>
+        <div class="flex space-x-4">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Use cases</h4>
+        <ul class="space-y-2">
+          <li>UI design</li>
+          <li>UX design</li>
+          <li>Wireframing</li>
+          <li>Diagramming</li>
+          <li>Brainstorming</li>
+          <li>Online whiteboard</li>
+          <li>Team collaboration</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Explore</h4>
+        <ul class="space-y-2">
+          <li>Design</li>
+          <li>Prototyping</li>
+          <li>Development features</li>
+          <li>Design systems</li>
+          <li>Collaboration features</li>
+          <li>Design process</li>
+          <li>FigJam</li>
+
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Resources</h4>
+        <ul class="space-y-2">
+          <li>Blog</li>
+          <li>Best practices</li>
+          <li>Colors</li>
+          <li>Color wheel</li>
+          <li>Support</li>
+          <li>Developers</li>
+          <li>Resource library</li>
+
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+    <script>
+        // Toggle password
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("password");
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            togglePassword.classList.toggle("fa-eye");
+            togglePassword.classList.toggle("fa-eye-slash");
+        });
+
+        // Dropdown menu
+        const dropdownButton = document.getElementById("dropdownButton");
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        const welcomeTitle = document.querySelector("#welcomeTitle");
+
+        dropdownButton.addEventListener("click", () => {
+            dropdownMenu.classList.toggle("hidden");
+        });
+
+        // Tutup dropdown kalau klik di luar
+        document.addEventListener("click", (e) => {
+            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+
+        // Event listener untuk pilihan dropdown
+        dropdownMenu.querySelectorAll("a").forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                const role = item.textContent.trim();
+
+                // Tentukan apakah pakai "a" atau "an"
+                const firstLetter = role.charAt(0).toLowerCase();
+                const article = ["a","e","i","o","u"].includes(firstLetter) ? "an" : "a";
+
+                // Ubah teks judul welcome
+                welcomeTitle.textContent = `Welcome Back ${role}!`;
+
+                // Ubah teks tombol dropdown
+                dropdownButton.innerHTML = `Login as ${article} ${role} <i class="fa-solid fa-chevron-down ml-2"></i>`;
+
+                // Tutup dropdown
+                dropdownMenu.classList.add("hidden");
+            });
+        });
+    </script>
+
+
+</body>
+</html>
