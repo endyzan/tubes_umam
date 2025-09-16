@@ -71,6 +71,7 @@
             <button type="submit" class="w-full py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition">
                 Login
             </button>
+            
         </form>
 
         <!-- Dropdown login as -->
@@ -81,7 +82,7 @@
                 <i class="fa-solid fa-chevron-down ml-2"></i>
             </button>
             <div id="dropdownMenu" class="hidden absolute left-0 right-0 mt-2 bg-white border rounded-lg shadow-lg">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Employee</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Customer</a>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Lawyer</a>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Administrator</a>
             </div>
@@ -142,54 +143,96 @@
     </div>
   </footer>
 
-    <script>
-        // Toggle password
-        const togglePassword = document.getElementById("togglePassword");
-        const passwordInput = document.getElementById("password");
-        togglePassword.addEventListener("click", () => {
-            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-            passwordInput.setAttribute("type", type);
-            togglePassword.classList.toggle("fa-eye");
-            togglePassword.classList.toggle("fa-eye-slash");
+  <script>
+    // Toggle password
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    togglePassword.addEventListener("click", () => {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+    });
+
+    // Dropdown menu
+    const dropdownButton = document.getElementById("dropdownButton");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    const welcomeTitle = document.querySelector("#welcomeTitle");
+
+    dropdownButton.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("hidden");
+    });
+
+    // Tutup dropdown kalau klik di luar
+    document.addEventListener("click", (e) => {
+        if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
+
+    // Event listener untuk pilihan dropdown
+    dropdownMenu.querySelectorAll("a").forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const role = item.textContent.trim();
+
+            // Tentukan apakah pakai "a" atau "an"
+            const firstLetter = role.charAt(0).toLowerCase();
+            const article = ["a","e","i","o","u"].includes(firstLetter) ? "an" : "an";
+
+            // Ubah teks judul welcome
+            welcomeTitle.textContent = `Welcome Back ${role}!`;
+
+            // Ubah teks tombol dropdown
+            dropdownButton.innerHTML = `Login as ${article} ${role} <i class="fa-solid fa-chevron-down ml-2"></i>`;
+
+            // Tutup dropdown
+            dropdownMenu.classList.add("hidden");
         });
+    });
 
-        // Dropdown menu
-        const dropdownButton = document.getElementById("dropdownButton");
-        const dropdownMenu = document.getElementById("dropdownMenu");
-        const welcomeTitle = document.querySelector("#welcomeTitle");
+    // ✅ Set default ke Customer saat pertama kali buka halaman
+    window.addEventListener("DOMContentLoaded", () => {
+        const defaultRole = "Customer";
+        welcomeTitle.textContent = `Welcome Back ${defaultRole}!`;
+        dropdownButton.innerHTML = `Login as an ${defaultRole} <i class="fa-solid fa-chevron-down ml-2"></i>`;
+    });
 
-        dropdownButton.addEventListener("click", () => {
-            dropdownMenu.classList.toggle("hidden");
+    // Tangkap form login
+    const loginForm = document.getElementById("loginForm");
+
+    // Simpan role yang dipilih (default = Customer)
+    let selectedRole = "Customer";
+
+    dropdownMenu.querySelectorAll("a").forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            selectedRole = item.textContent.trim(); // update role
+
+            const firstLetter = selectedRole.charAt(0).toLowerCase();
+            const article = ["a","e","i","o","u"].includes(firstLetter) ? "an" : "a";
+
+            welcomeTitle.textContent = `Welcome Back ${selectedRole}!`;
+            dropdownButton.innerHTML = `Login as ${article} ${selectedRole} <i class="fa-solid fa-chevron-down ml-2"></i>`;
+
+            dropdownMenu.classList.add("hidden");
         });
+    });
 
-        // Tutup dropdown kalau klik di luar
-        document.addEventListener("click", (e) => {
-            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.classList.add("hidden");
-            }
-        });
+    // Event submit form
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault(); // biar tidak reload dulu
 
-        // Event listener untuk pilihan dropdown
-        dropdownMenu.querySelectorAll("a").forEach(item => {
-            item.addEventListener("click", (e) => {
-                e.preventDefault();
-                const role = item.textContent.trim();
+        if (selectedRole === "Customer") {
+            window.location.href = "./customer/customer-dashboard.html";
+        } else if (selectedRole === "Lawyer") {
+            window.location.href = "lawyer-dashboard.html";
+        } else if (selectedRole === "Administrator") {
+            window.location.href = "./admin/admin-dashboard.html";
+        }
+    });
 
-                // Tentukan apakah pakai "a" atau "an"
-                const firstLetter = role.charAt(0).toLowerCase();
-                const article = ["a","e","i","o","u"].includes(firstLetter) ? "an" : "a";
-
-                // Ubah teks judul welcome
-                welcomeTitle.textContent = `Welcome Back ${role}!`;
-
-                // Ubah teks tombol dropdown
-                dropdownButton.innerHTML = `Login as ${article} ${role} <i class="fa-solid fa-chevron-down ml-2"></i>`;
-
-                // Tutup dropdown
-                dropdownMenu.classList.add("hidden");
-            });
-        });
-    </script>
+  </script>
 
 
 </body>
