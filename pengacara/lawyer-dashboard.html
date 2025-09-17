@@ -19,27 +19,35 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="./lawyer-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
-            <i class="fa-solid fa-user"></i>
-            <span>Lawyer Data</span>
+          <a href="./lawyer-schadule/lawyer-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-regular fa-calendar"></i>
+            <span>Lawyer Schedule</span>
           </a>
-          <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
-            <i class="fa-solid fa-users"></i>
-            <span>Customer Data</span>
-          </a>
-          <a href="#" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
-            <i class="fa-solid fa-file-lines"></i>
+          <a href="./consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-regular fa-clipboard"></i>
             <span>Consultation</span>
+          </a>
+          <a href="./consultation-history.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-solid fa-database"></i>
+            <span>Consultation History</span>
+          </a>
+          <a href="./my-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-solid fa-server"></i>
+            <span>My Schedule</span>
+          </a>
+          <a href="./my-profile.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-regular fa-user"></i>
+            <span>My Profile</span>
           </a>
         </nav>
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='login.html'" 
+        <button onclick="window.location.href='../login.html'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -47,41 +55,63 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-8">
-      <h1 class="text-3xl font-bold">Welcome Back!</h1>
-      <p class="text-xl text-gray-600 mb-8">Mr. Tono Sutono</p>
+    <main class="flex-1 p-12">
+      <h1 class="text-3xl font-bold mb-2">Welcome Back!</h1>
+      <p class="text-xl text-gray-600 mb-10">Mr. <span class="font-semibold">Tono Sutono</span></p>
 
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-3 gap-10 max-w-5xl">
         <!-- Card 1 -->
-        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-          <div class="flex justify-center items-center h-40 text-5xl text-gray-600">
-            <i class="fa-solid fa-user"></i>
+        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+          <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
+            <i class="fa-regular fa-calendar"></i>
           </div>
           <div class="bg-gray-700 text-white p-4 text-center">
-            <h3 class="font-bold">Lawyer Data</h3>
+            <h3 class="font-bold">Lawyer Schedule</h3>
             <p>Lawyer</p>
           </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-          <div class="flex justify-center items-center h-40 text-5xl text-gray-600">
-            <i class="fa-solid fa-users"></i>
+        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+          <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
+            <i class="fa-regular fa-clipboard"></i>
           </div>
           <div class="bg-gray-700 text-white p-4 text-center">
-            <h3 class="font-bold">Customer Data</h3>
+            <h3 class="font-bold">Consultation</h3>
             <p>Customer</p>
           </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-          <div class="flex justify-center items-center h-40 text-5xl text-gray-600">
-            <i class="fa-solid fa-file-lines"></i>
+        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+          <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
+            <i class="fa-solid fa-database"></i>
           </div>
           <div class="bg-gray-700 text-white p-4 text-center">
-            <h3 class="font-bold">Consultation</h3>
-            <p>Services</p>
+            <h3 class="font-bold">Consultation History</h3>
+            <p>Customer</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+          <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
+            <i class="fa-solid fa-server"></i>
+          </div>
+          <div class="bg-gray-700 text-white p-4 text-center">
+            <h3 class="font-bold">My Schedule</h3>
+            <p>Lawyer</p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
+          <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
+            <i class="fa-regular fa-user"></i>
+          </div>
+          <div class="bg-gray-700 text-white p-4 text-center">
+            <h3 class="font-bold">My Profile</h3>
+            <p>Lawyer</p>
           </div>
         </div>
       </div>
