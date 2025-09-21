@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Lawyer Data - Three Brother Law</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-lg flex flex-col justify-between">
+      <div>
+        <div class="p-6 text-center">
+          <img src="../../assets/img/logo.png" alt="Logo" class="w-20 mx-auto mb-2">
+          <h2 class="text-lg font-bold">Three Brother Law</h2>
+        </div>
+
+        <nav class="px-4 space-y-2">
+          <a href="../admin-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="../lawyer-data/lwyer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+            <i class="fa-solid fa-user"></i>
+            <span>Lawyer Data</span>
+          </a>
+          <a href="../customer-data/customer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-solid fa-users"></i>
+            <span>Customer Data</span>
+          </a>
+          <a href="../consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>Consultation</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="p-6">
+        <button onclick="window.location.href='../../login.html'" 
+          class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
+          Log-out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+      <h1 class="text-3xl font-bold mb-6">Edit Lawyer Data</h1>
+
+      <form action="#" class="bg-white p-6 rounded-xl shadow-lg space-y-4 max-w-2xl">
+        <div>
+          <label class="block font-semibold">Name</label>
+          <input type="text" class="w-full px-3 py-2 border rounded bg-gray-200" value="Tonno Sutono">
+        </div>
+        
+        <div>
+          <label class="block font-semibold">Email Address</label>
+          <input type="email" class="w-full px-3 py-2 border rounded bg-gray-200" value="tonno.sutono@gmail.com">
+        </div>
+
+        <div>
+          <label class="block font-semibold">Address</label>
+          <input type="text" class="w-full px-3 py-2 border rounded bg-gray-200" value="Jl. Merdeka No. 45, Jakarta">
+        </div>
+
+        <div>
+          <label class="block font-semibold">Place of Birth</label>
+          <input type="text" class="w-full px-3 py-2 border rounded bg-gray-200" value="Jakarta">
+        </div>
+
+        <div>
+          <label class="block font-semibold">Date of Birth</label>
+          <input type="text" class="w-full px-3 py-2 border rounded bg-gray-200" value="15 March 1985">
+        </div>
+
+        <div>
+          <label class="block font-semibold">Lawyer Profession</label>
+          <input type="text" class="w-full px-3 py-2 border rounded bg-gray-200" value="Pidana">
+        </div>
+
+        <div>
+          <label class="block font-semibold">Phone Number</label>
+          <input type="text" class="w-full px-3 py-2 border rounded bg-gray-200" value="+628123456789">
+        </div>
+
+        <div class="relative">
+          <label class="block font-semibold">Password</label>
+          <input type="password" id="password" class="w-full px-3 py-2 border rounded bg-gray-200 pr-10" value="password123">
+          <i class="fa-solid fa-eye absolute right-3 top-9 text-gray-600 cursor-pointer" onclick="togglePassword('password', this)"></i>
+        </div>
+
+        <div class="relative">
+          <label class="block font-semibold">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="w-full px-3 py-2 border rounded bg-gray-200 pr-10" value="password123">
+          <i class="fa-solid fa-eye absolute right-3 top-9 text-gray-600 cursor-pointer" onclick="togglePassword('confirmPassword', this)"></i>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-3 pt-4">
+          <a href="./lwyer-data.html" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">Cancel</a>
+          <a href="./lwyer-data.html" class="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700">Update</a>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    function togglePassword(id, el) {
+      const input = document.getElementById(id);
+      if (input.type === "password") {
+        input.type = "text";
+        el.classList.remove("fa-eye");
+        el.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        el.classList.remove("fa-eye-slash");
+        el.classList.add("fa-eye");
+      }
+    }
+  </script>
+
+</body>
+</html>
