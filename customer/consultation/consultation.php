@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// Cek apakah sudah login
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Customer') {
+    // Jika belum login atau bukan role Customer → tendang balik ke login
+    header("Location: ../login.php");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +31,15 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../customer-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../customer-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="./consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="./consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-regular fa-clipboard"></i>
             <span>Consultation</span>
           </a>
-          <a href="../consultation-status/consultation-status.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation-status/consultation-status.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-inbox"></i>
             <span>Consultation Status</span>
           </a>
@@ -35,7 +47,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.html'" 
+        <button onclick="window.location.href='../../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>

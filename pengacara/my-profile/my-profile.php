@@ -19,27 +19,27 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../lawyer-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../lawyer-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="../lawyer-schadule/lawyer-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../lawyer-schadule/lawyer-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-calendar"></i>
             <span>Lawyer Schedule</span>
           </a>
-          <a href="../consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-clipboard"></i>
             <span>Consultation</span>
           </a>
-          <a href="../consultation-history/consultation-history.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation-history/consultation-history.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-database"></i>
             <span>Consultation History</span>
           </a>
-          <a href="../my-schadule/my-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../my-schadule/my-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-server"></i>
             <span>My Schedule</span>
           </a>
-          <a href="../my-profile/my-profile.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="../my-profile/my-profile.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-regular fa-user"></i>
             <span>My Profile</span>
           </a>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.html'" 
+        <button onclick="window.location.href='../../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -143,9 +143,10 @@
         </div>
 
         <!-- Right: Profile Photo -->
+        <!-- Right: Profile Photo -->
         <div class="text-center">
         <h2 class="text-xl font-bold mb-4">Profile Photo</h2>
-        <img id="profileImage" src="../../assets/img/profile-photo.jpg" 
+        <img src="../../assets/img/profiletbl.png" 
             alt="Profile" class="w-40 mx-auto rounded-md mb-4">
 
         <p class="bg-gray-200 px-4 py-2 rounded-lg mb-3">Michael Hutabarat S.H</p>
@@ -154,19 +155,12 @@
             <span class="px-4 py-2 bg-gray-800 text-white rounded-lg">Active</span>
         </div>
 
-        <!-- Input file disembunyikan -->
-        <input type="file" id="fileInput" accept="image/*" class="hidden">
-
-        <!-- Tombol Upload -->
-        <button onclick="document.getElementById('fileInput').click()" 
-                class="w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 mb-3">
-            Upload Photo
-        </button>
-
+        <!-- Hapus tombol Upload Photo -->
         <button class="w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
             Change Password
         </button>
         </div>
+
     </div>
     </div>
 
@@ -273,22 +267,6 @@
 
   <!-- Script preview -->
     <script>
-    const fileInput = document.getElementById('fileInput');
-    const profileImage = document.getElementById('profileImage');
-
-    fileInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            profileImage.src = e.target.result; // ganti gambar dengan hasil upload
-        }
-        reader.readAsDataURL(file);
-        }
-    });
-    </script>
-
-    <script>
     // pilih semua tombol toggle
     document.querySelectorAll('button[data-target]').forEach(btn => {
         btn.style.cursor = 'pointer';
@@ -349,7 +327,7 @@
         }
         });
     });
-    </script>
+    </>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {

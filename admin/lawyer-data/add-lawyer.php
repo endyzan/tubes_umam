@@ -19,11 +19,11 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../admin-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../admin-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="../lawyer-data/lwyer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="../lawyer-data/lwyer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-user"></i>
             <span>Lawyer Data</span>
           </a>
@@ -31,7 +31,7 @@
             <i class="fa-solid fa-users"></i>
             <span>Customer Data</span>
           </a>
-          <a href="./consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-file-lines"></i>
             <span>Consultation</span>
           </a>
@@ -39,7 +39,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../login.html'" 
+        <button onclick="window.location.href='../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -101,8 +101,8 @@
 
         <!-- Buttons -->
         <div class="flex justify-end space-x-3 pt-4">
-          <a href="./lwyer-data.html" type="button" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">Cancel</a>
-          <a href="./lwyer-data.html" type="submit" class="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700">Submit</a>
+          <a href="./lwyer-data.php" type="button" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">Cancel</a>
+          <a href="./lwyer-data.php" type="submit" class="bg-gray-600 text-white px-6 py-2 rounded hover:bg-gray-700">Submit</a>
         </div>
       </form>
     </main>

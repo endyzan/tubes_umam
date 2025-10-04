@@ -1,3 +1,43 @@
+<?php
+session_start();
+include "config.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $conn->real_escape_string($_POST['username']);
+    $password = $_POST['password'];
+
+    $result = $conn->query("SELECT * FROM users WHERE username='$username' LIMIT 1");
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user['password'])) {
+            // Simpan session
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role']     = $user['role'];
+            
+
+            // Arahkan sesuai role
+            if ($user['role'] == "Administrator") {
+                header("Location: admin/admin-dashboard.php");
+            } elseif ($user['role'] == "Lawyer") {
+                header("Location: pengacara/lawyer-dashboard.php");
+            } elseif ($user['role'] == "Customer") {
+                header("Location: customer/customer-dashboard.php");
+            } else {
+                header("Location: login.php");
+            }
+            exit;
+        } else {
+            echo "Password salah!";
+        }
+    } else {
+        echo "User tidak ditemukan!";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,20 +53,20 @@
   <header class="fixed w-full bg-white shadow z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
       <div class="flex items-center space-x-2">
-        <a href="index.html">
+        <a href="index.php">
           <img src="./assets/img/logo.png" alt="Logo" class="w-10 h-10">
         </a>
       </div>
       <nav class="space-x-6 hidden md:flex text-gray-700">
-        <a href="index.html#about" class="hover:text-gray-900">Tentang Kami</a>
-        <a href="index.html#services" class="hover:text-gray-900">Layanan</a>
-        <a href="index.html#testimony" class="hover:text-gray-900">Testimoni</a>
-        <a href="index.html#location" class="hover:text-gray-900">Lokasi</a>
-        <a href="index.html#contact" class="hover:text-gray-900">Kontak</a>
+        <a href="index.php#about" class="hover:text-gray-900">Tentang Kami</a>
+        <a href="index.php#services" class="hover:text-gray-900">Layanan</a>
+        <a href="index.php#testimony" class="hover:text-gray-900">Testimoni</a>
+        <a href="index.php#location" class="hover:text-gray-900">Lokasi</a>
+        <a href="index.php#contact" class="hover:text-gray-900">Kontak</a>
       </nav>
       <div class="space-x-3">
-        <a href="login.html" class="px-4 py-2 border rounded hover:bg-gray-100">Masuk</a>
-        <a href="register.html" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Daftar</a>
+        <a href="login.php" class="px-4 py-2 border rounded hover:bg-gray-100">Masuk</a>
+        <a href="register.php" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Daftar</a>
       </div>
     </div>
   </header>
@@ -47,7 +87,7 @@
         </div>
 
         <!-- Form -->
-        <form id="loginForm" class="space-y-4">
+        <form action="login.php" method="POST" id="loginForm" class="space-y-4">
             <!-- Username -->
             <div class="flex items-center border rounded-lg px-3 py-2">
                 <i class="fa-regular fa-user text-gray-500 mr-3"></i>
@@ -122,8 +162,8 @@
           <li class="hover:text-gray-600"><a href="#services">Layanan</a></li>
           <li class="hover:text-gray-600"><a href="#testimony">Testimoni</a></li>
           <li class="hover:text-gray-600"><a href="#contact">Kontak</a></li>
-          <li class="hover:text-gray-600"><a href="login.html">Login</a></li>
-          <li class="hover:text-gray-600"><a href="register.html">Daftar</a></li>
+          <li class="hover:text-gray-600"><a href="login.php">Login</a></li>
+          <li class="hover:text-gray-600"><a href="register.php">Daftar</a></li>
         </ul>
       </div>
       <div>
@@ -221,17 +261,28 @@
     });
 
     // Event submit form
+    // Event submit form
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault(); // biar tidak reload dulu
 
+        const usernameInput = document.querySelector("input[name='username']").value.trim();
+
+        // ✅ Cek username khusus admin
+        if (usernameInput === "adminpalingkece") {
+            window.location.href = "./admin/admin-dashboard.php";
+            return;
+        }
+
+        // Jika bukan admin khusus, pakai role
         if (selectedRole === "Customer") {
-            window.location.href = "./customer/customer-dashboard.html";
+            window.location.href = "./customer/customer-dashboard.php";
         } else if (selectedRole === "Lawyer") {
-            window.location.href = "./pengacara/lawyer-dashboard.html";
+            window.location.href = "./pengacara/lawyer-dashboard.php";
         } else if (selectedRole === "Administrator") {
-            window.location.href = "./admin/admin-dashboard.html";
+            window.location.href = "./admin/admin-dashboard.php";
         }
     });
+
 
   </script>
 

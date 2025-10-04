@@ -19,27 +19,27 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../lawyer-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../lawyer-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="../lawyer-schedule/lawyer-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../lawyer-schedule/lawyer-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-calendar"></i>
             <span>Lawyer Schedule</span>
           </a>
-          <a href="../consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-clipboard"></i>
             <span>Consultation</span>
           </a>
-          <a href="../consultation-history/consultation-history.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation-history/consultation-history.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-database"></i>
             <span>Consultation History</span>
           </a>
-          <a href="./my-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="./my-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-server"></i>
             <span>My Schedule</span>
           </a>
-          <a href="../my-profile/my-profile.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../my-profile/my-profile.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-user"></i>
             <span>My Profile</span>
           </a>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.html'" 
+        <button onclick="window.location.href='../../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -90,10 +90,10 @@
 
             <!-- Buttons -->
             <div class="flex justify-end space-x-4">
-            <a href="./my-schedule.html" type="reset" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+            <a href="./my-schedule.php" type="reset" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                 Cancel
             </a>
-            <a href="./my-schedule.html" type="submit" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+            <a href="./my-schedule.php" type="submit" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
                 Submit
             </a>
             </div>

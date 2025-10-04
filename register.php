@@ -1,3 +1,28 @@
+<?php
+session_start();
+include "config.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $conn->real_escape_string($_POST['username']);
+    $email    = $conn->real_escape_string($_POST['email']);
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $role     = "Customer"; // default kalau dari register
+
+    $sql = "INSERT INTO users (username, email, password, role) 
+            VALUES ('$username', '$email', '$password', '$role')";
+
+    if ($conn->query($sql) === TRUE) {
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
+        header("Location: login.php");
+        exit;
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,20 +37,20 @@
   <header class="fixed w-full bg-white shadow z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
       <div class="flex items-center space-x-2">
-        <a href="index.html">
+        <a href="index.php">
           <img src="./assets/img/logo.png" alt="Logo" class="w-10 h-10">
         </a>
       </div>
       <nav class="space-x-6 hidden md:flex text-gray-700">
-        <a href="index.html#about" class="hover:text-gray-900">Tentang Kami</a>
-        <a href="index.html#services" class="hover:text-gray-900">Layanan</a>
-        <a href="index.html#testimony" class="hover:text-gray-900">Testimoni</a>
-        <a href="index.html#location" class="hover:text-gray-900">Lokasi</a>
-        <a href="index.html#contact" class="hover:text-gray-900">Kontak</a>
+        <a href="index.php#about" class="hover:text-gray-900">Tentang Kami</a>
+        <a href="index.php#services" class="hover:text-gray-900">Layanan</a>
+        <a href="index.php#testimony" class="hover:text-gray-900">Testimoni</a>
+        <a href="index.php#location" class="hover:text-gray-900">Lokasi</a>
+        <a href="index.php#contact" class="hover:text-gray-900">Kontak</a>
       </nav>
       <div class="space-x-3">
-        <a href="login.html" class="px-4 py-2 border rounded hover:bg-gray-100">Masuk</a>
-        <a href="register.html" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Daftar</a>
+        <a href="login.php" class="px-4 py-2 border rounded hover:bg-gray-100">Masuk</a>
+        <a href="register.php" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Daftar</a>
       </div>
     </div>
   </header>
@@ -38,7 +63,7 @@
                 <img src="./assets/img/logo.png" alt="Logo" class="w-16 h-16 mx-auto mb-2">
                 <h2 class="text-2xl font-bold">Three Brother Law</h2>
             </div>
-            <form id="registerForm" class="space-y-4">
+            <form action="register.php" method="POST" id="registerForm" class="space-y-4">
             <div class="flex items-center border rounded-lg px-3 py-2">
                 <i class="fa-regular fa-user text-gray-500 mr-3"></i>
                 <input type="text" name="username" placeholder="Username" required class="w-full outline-none">
@@ -49,11 +74,11 @@
             </div>
             <div class="flex items-center border rounded-lg px-3 py-2 relative">
                 <i class="fa-solid fa-lock text-gray-500 mr-3"></i>
-                <input type="text" id="password" name="password" placeholder="Password" required class="w-full outline-none">
+                <input type="password" id="password" name="password" placeholder="Password" required class="w-full outline-none">
             </div>
             <div class="flex items-center border rounded-lg px-3 py-2 relative">
                 <i class="fa-solid fa-lock text-gray-500 mr-3"></i>
-                <input type="text" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required class="w-full outline-none">
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required class="w-full outline-none">
             </div>
             <button type="submit" class="w-full py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition">
                 Register
@@ -61,7 +86,7 @@
             </form>
         <p class="text-center text-sm text-gray-600 mt-4">
             Already have an account?
-            <a href="login.html" class="text-blue-600 hover:underline">Sign in</a>
+            <a href="login.php" class="text-blue-600 hover:underline">Sign in</a>
         </p>
         </div>
     </div>
@@ -115,8 +140,8 @@
           <li class="hover:text-gray-600"><a href="#services">Layanan</a></li>
           <li class="hover:text-gray-600"><a href="#testimony">Testimoni</a></li>
           <li class="hover:text-gray-600"><a href="#contact">Kontak</a></li>
-          <li class="hover:text-gray-600"><a href="login.html">Login</a></li>
-          <li class="hover:text-gray-600"><a href="register.html">Daftar</a></li>
+          <li class="hover:text-gray-600"><a href="login.php">Login</a></li>
+          <li class="hover:text-gray-600"><a href="register.php">Daftar</a></li>
         </ul>
       </div>
       <div>
@@ -143,14 +168,19 @@
         const popup = document.getElementById('successPopup');
 
         form.addEventListener('submit', function(e) {
-        e.preventDefault(); // cegah reload halaman
-        popup.classList.remove('hidden'); // tampilkan popup
+            // jangan block permanen
+            if (!form.dataset.submitted) {
+                e.preventDefault();
+                popup.classList.remove('hidden');
+            }
         });
 
         function closePopup() {
-        popup.classList.add('hidden');
-        form.reset(); // kosongkan form setelah sukses
+            popup.classList.add('hidden');
+            form.dataset.submitted = true; // flag biar gak ke-block
+            form.submit(); // kirim form ke PHP
         }
+
     </script>
 </body>
 </html>

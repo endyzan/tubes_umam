@@ -11,3 +11,10 @@ ini link nya https://endyzan.github.io/tubes_umam/
 
 
 ## modul 4 (hosting)
+
+
+
+INSERT INTO users (username, email, password, role) VALUES
+('adminpalingkece', 'admin@example.com', SHA2('passwordadmin', 256), 'Administrator'),
+('johndoe', 'john@example.com', SHA2('123456', 256), 'Customer'),
+('lawyermantap', 'lawyer@example.com', SHA2('lawyer123', 256), 'Lawyer');

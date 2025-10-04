@@ -19,19 +19,19 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../admin-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../admin-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="./lwyer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="./lwyer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-user"></i>
             <span>Lawyer Data</span>
           </a>
-          <a href="../customer-data/customer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../customer-data/customer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-users"></i>
             <span>Customer Data</span>
           </a>
-          <a href="../consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-file-lines"></i>
             <span>Consultation</span>
           </a>
@@ -39,7 +39,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.html'" 
+        <button onclick="window.location.href='../../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -50,7 +50,7 @@
     <main class="flex-1 p-8">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">Lawyer Data</h1>
-        <a href="./add-lawyer.html" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+        <a href="./add-lawyer.php" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
           Add +
         </a>
       </div>
@@ -72,7 +72,7 @@
               <td class="px-6 py-3">Tonno Sutono</td>
               <td class="px-6 py-3">Pidana</td>
               <td class="px-6 py-3 flex space-x-2">
-                <button onclick="window.location.href='./edit-lawyer.html'" 
+                <button onclick="window.location.href='./edit-lawyer.php'" 
                   class="bg-black text-white px-3 py-1 rounded">
                   Edit
                 </button>
@@ -85,7 +85,7 @@
               <td class="px-6 py-3">Suparto Karto</td>
               <td class="px-6 py-3">Advokat</td>
               <td class="px-6 py-3 flex space-x-2">
-                <button onclick="window.location.href='./edit-lawyer.html'" 
+                <button onclick="window.location.href='./edit-lawyer.php'" 
                   class="bg-black text-white px-3 py-1 rounded">
                   Edit
                 </button>
@@ -98,7 +98,7 @@
               <td class="px-6 py-3">Lailul Subianto</td>
               <td class="px-6 py-3">Kooporasi</td>
               <td class="px-6 py-3 flex space-x-2">
-                <button onclick="window.location.href='./edit-lawyer.html'" 
+                <button onclick="window.location.href='./edit-lawyer.php'" 
                   class="bg-black text-white px-3 py-1 rounded">
                   Edit
                 </button>

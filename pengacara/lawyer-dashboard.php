@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,27 +23,27 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="./lawyer-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="./lawyer-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="./lawyer-schadule/lawyer-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./lawyer-schadule/lawyer-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-calendar"></i>
             <span>Lawyer Schedule</span>
           </a>
-          <a href="./consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-clipboard"></i>
             <span>Consultation</span>
           </a>
-          <a href="./consultation-history/consultation-history.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./consultation-history/consultation-history.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-database"></i>
             <span>Consultation History</span>
           </a>
-          <a href="./my-schadule/my-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./my-schadule/my-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-server"></i>
             <span>My Schedule</span>
           </a>
-          <a href="./my-profile/my-profile.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./my-profile/my-profile.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-user"></i>
             <span>My Profile</span>
           </a>
@@ -47,7 +51,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../login.html'" 
+        <button onclick="window.location.href='../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -61,7 +65,7 @@
 
       <div class="grid md:grid-cols-3 gap-10 max-w-5xl">
         <!-- Card 1 -->
-        <a href="./lawyer-schadule/lawyer-schedule.html" 
+        <a href="./lawyer-schadule/lawyer-schedule.php" 
           class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-regular fa-calendar"></i>
@@ -73,7 +77,7 @@
         </a>
 
         <!-- Card 2 -->
-        <a href="./consultation/consultation.html" 
+        <a href="./consultation/consultation.php" 
           class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-regular fa-clipboard"></i>
@@ -85,7 +89,7 @@
         </a>
 
         <!-- Card 3 -->
-        <a href="./consultation-history/consultation-history.html" 
+        <a href="./consultation-history/consultation-history.php" 
           class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-solid fa-database"></i>
@@ -97,7 +101,7 @@
         </a>
 
         <!-- Card 4 -->
-        <a href="./my-schadule/my-schedule.html" 
+        <a href="./my-schadule/my-schedule.php" 
           class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-solid fa-server"></i>
@@ -109,7 +113,7 @@
         </a>
 
         <!-- Card 5 -->
-        <a href="./my-profile/my-profile.html" 
+        <a href="./my-profile/my-profile.php" 
           class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-regular fa-user"></i>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consultation History - Three Brother Law</title>
+  <title>Lawyer Schedule - Three Brother Law</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -19,27 +19,27 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../lawyer-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../lawyer-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="../lawyer-schadule/lawyer-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="./lawyer-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-regular fa-calendar"></i>
             <span>Lawyer Schedule</span>
           </a>
-          <a href="../consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-clipboard"></i>
             <span>Consultation</span>
           </a>
-          <a href="./consultation-history.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="../consultation-history/consultation-history.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-database"></i>
             <span>Consultation History</span>
           </a>
-          <a href="../my-schadule/my-schedule.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../my-schadule/my-schedule.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-server"></i>
             <span>My Schedule</span>
           </a>
-          <a href="../my-profile/my-profile.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../my-profile/my-profile.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-regular fa-user"></i>
             <span>My Profile</span>
           </a>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.html'" 
+        <button onclick="window.location.href='../../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -56,62 +56,55 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-12">
-      <h1 class="text-3xl font-bold mb-8">Consultation History</h1>
+      <h1 class="text-3xl font-bold mb-8">Lawyer Schedule</h1>
 
       <!-- Table -->
       <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
         <table class="w-full text-left border-collapse">
           <thead class="bg-gray-200">
             <tr>
-              <th class="px-6 py-3 font-semibold">ID</th>
-              <th class="px-6 py-3 font-semibold">Customer Name</th>
-              <th class="px-6 py-3 font-semibold">Date</th>
+              <th class="px-6 py-3 font-semibold">Lawyer Name</th>
+              <th class="px-6 py-3 font-semibold">Consule Date</th>
+              <th class="px-6 py-3 font-semibold">Profession</th>
               <th class="px-6 py-3 font-semibold">Day</th>
               <th class="px-6 py-3 font-semibold">Time</th>
-              <th class="px-6 py-3 font-semibold">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr class="border-t">
-              <td class="px-6 py-4">5764890</td>
-              <td class="px-6 py-4">Supriadi Juli</td>
+              <td class="px-6 py-4">Tonno Sutono</td>
               <td class="px-6 py-4">15 September 2025</td>
+              <td class="px-6 py-4">Pidana</td>
               <td class="px-6 py-4">Monday</td>
               <td class="px-6 py-4">13.00</td>
-              <td class="px-6 py-4">
-                <span class="bg-green-500 text-white px-3 py-1 rounded">Approved</span>
-              </td>
             </tr>
             <tr class="border-t">
-              <td class="px-6 py-4">5764890</td>
-              <td class="px-6 py-4">Adriawan Lex</td>
+              <td class="px-6 py-4">Suparto Karto</td>
               <td class="px-6 py-4">16 September 2025</td>
+              <td class="px-6 py-4">Advokat</td>
               <td class="px-6 py-4">Tuesday</td>
               <td class="px-6 py-4">13.30</td>
-              <td class="px-6 py-4">
-                <span class="bg-red-500 text-white px-3 py-1 rounded">Denied</span>
-              </td>
             </tr>
             <tr class="border-t">
-              <td class="px-6 py-4">5764890</td>
-              <td class="px-6 py-4">Budi Banteran</td>
+              <td class="px-6 py-4">Lailul Subianto</td>
               <td class="px-6 py-4">16 September 2025</td>
+              <td class="px-6 py-4">Corporate</td>
               <td class="px-6 py-4">Tuesday</td>
               <td class="px-6 py-4">14.00</td>
-              <td class="px-6 py-4">
-                <span class="bg-green-500 text-white px-3 py-1 rounded">Approved</span>
-              </td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <!-- Pagination -->
+      <!-- Pagination (di luar kotak) -->
       <div class="flex items-center justify-between mt-6">
+        <!-- Previous -->
         <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
           <span class="mr-1">&lt;</span> Previous
         </button>
 
+        <!-- Page Numbers -->
         <div class="flex items-center space-x-2 text-gray-700">
           <span class="px-3 py-1 rounded bg-black text-white text-sm">1</span>
           <span class="px-2">2</span>
@@ -121,6 +114,7 @@
           <span class="px-2">68</span>
         </div>
 
+        <!-- Next -->
         <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
           Next <span class="ml-1">&gt;</span>
         </button>

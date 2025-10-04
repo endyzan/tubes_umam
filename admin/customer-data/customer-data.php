@@ -19,19 +19,19 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../admin-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../admin-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="../lawyer-data/lwyer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../lawyer-data/lwyer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-user"></i>
             <span>Lawyer Data</span>
           </a>
-          <a href="./customer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="./customer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-users"></i>
             <span>Customer Data</span>
           </a>
-          <a href="../consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-file-lines"></i>
             <span>Consultation</span>
           </a>
@@ -39,7 +39,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.html'" 
+        <button onclick="window.location.href='../../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -68,7 +68,7 @@
               <td class="py-3 px-4">Jl. Rungkut Indah 19</td>
               <td class="py-3 px-4">+62824989131</td>
               <td class="py-3 px-4 space-x-2">
-                <button onclick="window.location.href='./edit-customer.html'" 
+                <button onclick="window.location.href='./edit-customer.php'" 
                   class="bg-black text-white px-3 py-1 rounded">
                   Edit
                 </button>
@@ -82,7 +82,7 @@
               <td class="py-3 px-4">Jl. Kendangsari XI/5</td>
               <td class="py-3 px-4">+62822134145</td>
               <td class="py-3 px-4 space-x-2">
-                <button onclick="window.location.href='./edit-customer.html'" 
+                <button onclick="window.location.href='./edit-customer.php'" 
                   class="bg-black text-white px-3 py-1 rounded">
                   Edit
                 </button>
@@ -96,7 +96,7 @@
               <td class="py-3 px-4">Jl. Graha Famili V/1</td>
               <td class="py-3 px-4">+62814415215</td>
               <td class="py-3 px-4 space-x-2">
-                <button onclick="window.location.href='./edit-customer.html'" 
+                <button onclick="window.location.href='./edit-customer.php'" 
                   class="bg-black text-white px-3 py-1 rounded">
                   Edit
                 </button>

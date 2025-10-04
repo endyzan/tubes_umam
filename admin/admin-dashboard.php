@@ -19,19 +19,19 @@
         </div>
 
         <nav class="px-4 space-y-2">
-          <a href="../admin/admin-dashboard.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
+          <a href="../admin/admin-dashboard.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg bg-gray-100 text-red-600 font-semibold">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
           </a>
-          <a href="../admin/lawyer-data/lwyer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../admin/lawyer-data/lwyer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-user"></i>
             <span>Lawyer Data</span>
           </a>
-          <a href="../admin/customer-data/customer-data.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../admin/customer-data/customer-data.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-users"></i>
             <span>Customer Data</span>
           </a>
-          <a href="../admin/consultation/consultation.html" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
+          <a href="../admin/consultation/consultation.php" class="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100">
             <i class="fa-solid fa-file-lines"></i>
             <span>Consultation</span>
           </a>
@@ -39,7 +39,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../login.html'" 
+        <button onclick="window.location.href='../login.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -53,7 +53,7 @@
 
       <div class="grid md:grid-cols-3 gap-10 max-w-5xl">
         <!-- Card 1 -->
-        <a href="../admin/lawyer-data/lwyer-data.html" 
+        <a href="../admin/lawyer-data/lwyer-data.php" 
            class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-solid fa-user"></i>
@@ -65,7 +65,7 @@
         </a>
 
         <!-- Card 2 -->
-        <a href="../admin/customer-data/customer-data.html" 
+        <a href="../admin/customer-data/customer-data.php" 
            class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-solid fa-users"></i>
@@ -77,7 +77,7 @@
         </a>
 
         <!-- Card 3 -->
-        <a href="../admin/consultation/consultation.html" 
+        <a href="../admin/consultation/consultation.php" 
            class="block bg-gray-200 rounded-lg overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
           <div class="flex justify-center items-center h-48 text-7xl text-gray-600">
             <i class="fa-solid fa-file-lines"></i>

@@ -40,8 +40,8 @@
         <a href="index.html#contact" class="hover:text-gray-900">Kontak</a>
       </nav>
       <div class="space-x-3">
-        <a href="login.html" class="px-4 py-2 border rounded hover:bg-gray-100">Masuk</a>
-        <a href="register.html" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Daftar</a>
+        <a href="login.php" class="px-4 py-2 border rounded hover:bg-gray-100">Masuk</a>
+        <a href="register.php" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Daftar</a>
       </div>
     </div>
   </header>
