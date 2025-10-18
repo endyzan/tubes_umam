@@ -1,13 +1,17 @@
 <?php
 session_start();
 
-// Cek apakah sudah login
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Customer') {
-    // Jika belum login atau bukan role Customer → tendang balik ke login
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+if ($_SESSION['role'] !== 'Customer') {
     header("Location: ../login.php");
     exit;
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -47,7 +51,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Customer') {
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../login.php'" 
+        <button onclick="window.location.href='../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>

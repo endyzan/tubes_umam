@@ -1,14 +1,22 @@
 <?php
 session_start();
+require_once '../../config.php';
 
-// Cek apakah sudah login
+// Cek apakah sudah login dan role adalah Customer
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Customer') {
-    // Jika belum login atau bukan role Customer → tendang balik ke login
     header("Location: ../login.php");
     exit;
 }
-?>
 
+// Ambil data konsultasi berdasarkan nama customer yang login
+$customerName = $_SESSION['username'];
+$stmt = $pdo->prepare("SELECT lawyer_name, profession, day, time, status 
+                       FROM consultation_schedule 
+                       WHERE customer_name = :customer_name 
+                       ORDER BY created_at DESC");
+$stmt->execute(['customer_name' => $customerName]);
+$consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +55,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Customer') {
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
+        <button onclick="window.location.href='../../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -71,40 +79,35 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Customer') {
             </tr>
           </thead>
           <tbody>
-            <tr class="border-t">
-              <td class="px-6 py-4">Tonno Sutono</td>
-              <td class="px-6 py-4">Pidana</td>
-              <td class="px-6 py-4">Monday</td>
-              <td class="px-6 py-4">13.00</td>
-              <td class="px-6 py-4">
-                <span class="px-3 py-1 rounded-md bg-gray-600 text-white text-sm">Waiting For Confirmation</span>
-              </td>
-            </tr>
+            <?php if (count($consultations) > 0): ?>
+              <?php foreach ($consultations as $row): ?>
+                <tr class="border-t">
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['lawyer_name']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['profession']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['day']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['time']) ?></td>
+                  <td class="px-6 py-4">
+                    <?php
+                      $status = $row['status'];
+                      $color = match($status) {
+                          'Accepted' => 'bg-green-500',
+                          'Rejected' => 'bg-red-500',
+                          default => 'bg-gray-600'
+                      };
+                    ?>
+                    <span class="px-3 py-1 rounded-md text-white text-sm <?= $color ?>">
+                      <?= htmlspecialchars($status) ?>
+                    </span>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="5" class="px-6 py-4 text-center text-gray-500">No consultation records found.</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination (di luar kotak) -->
-      <div class="flex items-center justify-between mt-6">
-        <!-- Previous -->
-        <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
-          <span class="mr-1">&lt;</span> Previous
-        </button>
-
-        <!-- Page Numbers -->
-        <div class="flex items-center space-x-2 text-gray-700">
-          <span class="px-3 py-1 rounded bg-black text-white text-sm">1</span>
-          <span class="px-2">2</span>
-          <span class="px-2">3</span>
-          <span class="px-2">...</span>
-          <span class="px-2">67</span>
-          <span class="px-2">68</span>
-        </div>
-
-        <!-- Next -->
-        <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
-          Next <span class="ml-1">&gt;</span>
-        </button>
       </div>
     </main>
   </div>

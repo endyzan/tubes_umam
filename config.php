@@ -1,13 +1,13 @@
 <?php
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db = "threebrotherlaw";
+$dbname = "threebrotherlaw";
+$username = "root";
+$password = "";
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-if($conn->connect_error) {
-    die("keneksi gagal bang: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Koneksi gagal: " . $e->getMessage());
 }
-
 ?>

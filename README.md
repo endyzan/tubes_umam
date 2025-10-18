@@ -1,20 +1,30 @@
 # tubes_umam
 
-repositori ini digunakan untuk menyimpan projek umam
+repositori ini digunakan untuk menyimpan projek web Three Law Brother
 
-## modul 2 (html & css)
-karena html & css aja berarti web dalam kondisi statis, maka dari itu dapat di hosting secara gratis di github page.
+## info login
 
-ini link nya https://endyzan.github.io/tubes_umam/
+1. customer default
+- username: customer1
+- password: customer1
+2. admin default
+- username: adminsatu
+- password: adminsatu
+3. lawyer default
+- username: lawyersatu
+- password: lawyersatu1
 
-## modul 3 (php & database)
+## fitur unggulan
 
+1. Jika user tidak memilih “Login as…”, sistem akan menganggap percobaan login hanya untuk Administrator.
+2. Jika user memilih “Customer” atau “Lawyer”, maka login hanya akan berhasil jika role di database cocok.
+3. Jika role di database tidak sesuai dengan pilihan (atau kosong padahal user bukan admin), login gagal dengan pesan error.
 
-## modul 4 (hosting)
+**logika dasar**
 
-
-
-INSERT INTO users (username, email, password, role) VALUES
-('adminpalingkece', 'admin@example.com', SHA2('passwordadmin', 256), 'Administrator'),
-('johndoe', 'john@example.com', SHA2('123456', 256), 'Customer'),
-('lawyermantap', 'lawyer@example.com', SHA2('lawyer123', 256), 'Lawyer');
+1. Jika $role kosong → berarti user tidak memilih login as, maka sistem cek apakah user tersebut Administrator.
+- Kalau iya → masuk ke dashboard admin.
+- Kalau bukan → muncul pesan error “Anda harus memilih 'Login as' yang sesuai!”
+2. Jika $role diisi → cocokkan $user['role'] dengan $role.
+- Kalau cocok → diarahkan ke dashboard sesuai peran.
+- Kalau tidak cocok → pesan “Role tidak sesuai! Pastikan memilih peran yang benar.”

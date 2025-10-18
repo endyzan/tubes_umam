@@ -2,40 +2,72 @@
 session_start();
 include "config.php";
 
+// Jika sudah login
+if (isset($_SESSION['username'])) {
+    if ($_SESSION['role'] === 'Administrator') {
+        header("Location: admin/admin-dashboard.php");
+    } elseif ($_SESSION['role'] === 'Lawyer') {
+        header("Location: pengacara/lawyer-dashboard.php");
+    } else {
+        header("Location: customer/customer-dashboard.php");
+    }
+    exit;
+}
+
+// Proses login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $conn->real_escape_string($_POST['username']);
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
+    $role = isset($_POST['role']) ? trim($_POST['role']) : null;
 
-    $result = $conn->query("SELECT * FROM users WHERE username='$username' LIMIT 1");
+    // Ambil data user dari database
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+    $stmt->execute(['username' => $username]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    if ($user) {
+        // Verifikasi password (baik hash maupun plaintext lama)
+        if (
+            password_verify($password, $user['password']) ||
+            hash('sha256', $password) === $user['password']
+        ) {
 
-        if (password_verify($password, $user['password'])) {
-            // Simpan session
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role']     = $user['role'];
-            
-
-            // Arahkan sesuai role
-            if ($user['role'] == "Administrator") {
-                header("Location: admin/admin-dashboard.php");
-            } elseif ($user['role'] == "Lawyer") {
-                header("Location: pengacara/lawyer-dashboard.php");
-            } elseif ($user['role'] == "Customer") {
-                header("Location: customer/customer-dashboard.php");
+            // --- Logika Role ---
+            if (empty($role)) {
+                // Tidak memilih "login as" → hanya admin yang bisa login
+                if ($user['role'] === 'Administrator') {
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['role'] = $user['role'];
+                    header("Location: admin/admin-dashboard.php");
+                    exit;
+                } else {
+                    $error = "❌ Anda harus memilih 'Login as' yang sesuai!";
+                }
             } else {
-                header("Location: login.php");
+                // Jika user memilih role → cocokkan dengan role di database
+                if ($user['role'] === $role) {
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['role'] = $user['role'];
+
+                    if ($role === 'Lawyer') {
+                        header("Location: pengacara/lawyer-dashboard.php");
+                    } elseif ($role === 'Customer') {
+                        header("Location: customer/customer-dashboard.php");
+                    }
+                    exit;
+                } else {
+                    $error = "❌ Role tidak sesuai! Pastikan memilih peran yang benar.";
+                }
             }
-            exit;
         } else {
-            echo "Password salah!";
+            $error = "❌ Password salah!";
         }
     } else {
-        echo "User tidak ditemukan!";
+        $error = "❌ Username tidak ditemukan!";
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -49,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <!-- Navbar -->
+  <!-- Navbar -->
   <header class="fixed w-full bg-white shadow z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
       <div class="flex items-center space-x-2">
@@ -71,65 +103,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </header>
 
-
   <!-- Background -->
   <div class="min-h-screen flex items-center justify-center bg-cover bg-center" 
        style="background-image: url('./assets/img/banner.png');">
     <div class="absolute inset-0 bg-black/50"></div>
 
-    <!-- Register Box -->
     <div class="relative z-10 bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-        <!-- Logo & Title -->
         <div class="text-center mb-6">
             <img src="./assets/img/logo.png" alt="Logo" class="w-16 h-16 mx-auto mb-2">
-            <h2 id="welcomeTitle" class="text-2xl font-bold">Welcome Back!</h2>
-            <p class="text-gray-600">Sign-in or Create an account</p>
+            <h2 class="text-2xl font-bold">Welcome Back!</h2>
+            <p class="text-gray-600">Sign-in to your account</p>
         </div>
 
-        <!-- Form -->
-        <form action="login.php" method="POST" id="loginForm" class="space-y-4">
-            <!-- Username -->
+        <!-- Pesan error -->
+        <?php if (!empty($error)): ?>
+            <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-center">
+                <?= $error ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="login.php" method="POST" class="space-y-4">
             <div class="flex items-center border rounded-lg px-3 py-2">
                 <i class="fa-regular fa-user text-gray-500 mr-3"></i>
                 <input type="text" name="username" placeholder="Username" required class="w-full outline-none">
             </div>
 
-            <!-- Password -->
             <div class="flex items-center border rounded-lg px-3 py-2 relative">
                 <i class="fa-solid fa-lock text-gray-500 mr-3"></i>
                 <input type="password" id="password" name="password" placeholder="Password" required class="w-full outline-none">
                 <i class="fa-regular fa-eye absolute right-3 cursor-pointer text-gray-500" id="togglePassword"></i>
             </div>
 
-            <!-- Forgot password -->
-            <div class="text-right">
-                <a href="#" class="text-sm text-blue-600 hover:underline">Forgot Password?</a>
+            <!-- Dropdown Role tanpa Administrator -->
+            <div class="border rounded-lg px-3 py-2">
+                <select name="role" class="w-full outline-none bg-transparent text-gray-700">
+                    <option value="" disabled selected>Login as...</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Lawyer">Lawyer</option>
+                </select>
             </div>
 
-            <!-- Login button -->
             <button type="submit" class="w-full py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 transition">
                 Login
             </button>
-            
         </form>
-
-        <!-- Dropdown login as -->
-        <div class="relative mt-6">
-            <button id="dropdownButton" 
-                    class="w-full py-3 border rounded-lg flex justify-between items-center text-gray-700 hover:bg-gray-100">
-                Login as an
-                <i class="fa-solid fa-chevron-down ml-2"></i>
-            </button>
-            <div id="dropdownMenu" class="hidden absolute left-0 right-0 mt-2 bg-white border rounded-lg shadow-lg">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Customer</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Lawyer</a>
-
-            </div>
-        </div>
     </div>
   </div>
 
-  <!-- Footer -->
+    <!-- Footer -->
   <footer class="bg-gray-100 text-gray-800 py-12">
     <div class="container mx-auto grid md:grid-cols-4 gap-8 text-sm">
       <div>
@@ -185,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </footer>
 
   <script>
-    // Toggle password
+    // Toggle password visibility
     const togglePassword = document.getElementById("togglePassword");
     const passwordInput = document.getElementById("password");
     togglePassword.addEventListener("click", () => {
@@ -194,98 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         togglePassword.classList.toggle("fa-eye");
         togglePassword.classList.toggle("fa-eye-slash");
     });
-
-    // Dropdown menu
-    const dropdownButton = document.getElementById("dropdownButton");
-    const dropdownMenu = document.getElementById("dropdownMenu");
-    const welcomeTitle = document.querySelector("#welcomeTitle");
-
-    dropdownButton.addEventListener("click", () => {
-        dropdownMenu.classList.toggle("hidden");
-    });
-
-    // Tutup dropdown kalau klik di luar
-    document.addEventListener("click", (e) => {
-        if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.classList.add("hidden");
-        }
-    });
-
-    // Event listener untuk pilihan dropdown
-    dropdownMenu.querySelectorAll("a").forEach(item => {
-        item.addEventListener("click", (e) => {
-            e.preventDefault();
-            const role = item.textContent.trim();
-
-            // Tentukan apakah pakai "a" atau "an"
-            const firstLetter = role.charAt(0).toLowerCase();
-            const article = ["a","e","i","o","u"].includes(firstLetter) ? "an" : "an";
-
-            // Ubah teks judul welcome
-            welcomeTitle.textContent = `Welcome Back ${role}!`;
-
-            // Ubah teks tombol dropdown
-            dropdownButton.innerHTML = `Login as ${article} ${role} <i class="fa-solid fa-chevron-down ml-2"></i>`;
-
-            // Tutup dropdown
-            dropdownMenu.classList.add("hidden");
-        });
-    });
-
-    // ✅ Set default ke Customer saat pertama kali buka halaman
-    window.addEventListener("DOMContentLoaded", () => {
-        const defaultRole = "Customer";
-        welcomeTitle.textContent = `Welcome Back ${defaultRole}!`;
-        dropdownButton.innerHTML = `Login as an ${defaultRole} <i class="fa-solid fa-chevron-down ml-2"></i>`;
-    });
-
-    // Tangkap form login
-    const loginForm = document.getElementById("loginForm");
-
-    // Simpan role yang dipilih (default = Customer)
-    let selectedRole = "Customer";
-
-    dropdownMenu.querySelectorAll("a").forEach(item => {
-        item.addEventListener("click", (e) => {
-            e.preventDefault();
-            selectedRole = item.textContent.trim(); // update role
-
-            const firstLetter = selectedRole.charAt(0).toLowerCase();
-            const article = ["a","e","i","o","u"].includes(firstLetter) ? "an" : "a";
-
-            welcomeTitle.textContent = `Welcome Back ${selectedRole}!`;
-            dropdownButton.innerHTML = `Login as ${article} ${selectedRole} <i class="fa-solid fa-chevron-down ml-2"></i>`;
-
-            dropdownMenu.classList.add("hidden");
-        });
-    });
-
-    // Event submit form
-    // Event submit form
-    loginForm.addEventListener("submit", (e) => {
-        e.preventDefault(); // biar tidak reload dulu
-
-        const usernameInput = document.querySelector("input[name='username']").value.trim();
-
-        // ✅ Cek username khusus admin
-        if (usernameInput === "adminpalingkece") {
-            window.location.href = "./admin/admin-dashboard.php";
-            return;
-        }
-
-        // Jika bukan admin khusus, pakai role
-        if (selectedRole === "Customer") {
-            window.location.href = "./customer/customer-dashboard.php";
-        } else if (selectedRole === "Lawyer") {
-            window.location.href = "./pengacara/lawyer-dashboard.php";
-        } else if (selectedRole === "Administrator") {
-            window.location.href = "./admin/admin-dashboard.php";
-        }
-    });
-
-
   </script>
-
 
 </body>
 </html>

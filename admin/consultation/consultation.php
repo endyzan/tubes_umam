@@ -1,3 +1,18 @@
+<?php
+session_start();
+require_once '../../config.php';
+
+// Proteksi halaman: hanya admin yang boleh akses
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Administrator') {
+    header("Location: ../../login.php");
+    exit;
+}
+
+// Ambil semua data dari tabel consultation_schedule
+$stmt = $pdo->query("SELECT customer_name, consultation_date, lawyer_name, profession, day, time FROM consultation_schedule ORDER BY consultation_date DESC");
+$consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +54,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
+        <button onclick="window.location.href='../../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -57,46 +72,32 @@
               <th class="px-4 py-3 text-left rounded-tl-lg">Customer Name</th>
               <th class="px-4 py-3 text-left">Consule Date</th>
               <th class="px-4 py-3 text-left">Lawyer</th>
+              <th class="px-4 py-3 text-left">Profession</th>
               <th class="px-4 py-3 text-left">Day</th>
               <th class="px-4 py-3 text-left rounded-tr-lg">Time</th>
             </tr>
           </thead>
           <tbody class="text-gray-800">
-            <tr class="border-b">
-              <td class="px-4 py-3">Supriadi Juli</td>
-              <td class="px-4 py-3">15 September 2025</td>
-              <td class="px-4 py-3">Tonno Sutono</td>
-              <td class="px-4 py-3">Monday</td>
-              <td class="px-4 py-3">13.00</td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-4 py-3">Adriawan Lex</td>
-              <td class="px-4 py-3">16 September 2025</td>
-              <td class="px-4 py-3">Suparto Karto</td>
-              <td class="px-4 py-3">Tuesday</td>
-              <td class="px-4 py-3">13.30</td>
-            </tr>
-            <tr>
-              <td class="px-4 py-3">Budi Banteran</td>
-              <td class="px-4 py-3">16 September 2025</td>
-              <td class="px-4 py-3">Lailul Subianto</td>
-              <td class="px-4 py-3">Tuesday</td>
-              <td class="px-4 py-3">14.00</td>
-            </tr>
+            <?php if (count($consultations) > 0): ?>
+              <?php foreach ($consultations as $row): ?>
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="px-4 py-3"><?= htmlspecialchars($row['customer_name']) ?></td>
+                  <td class="px-4 py-3"><?= htmlspecialchars(date("d F Y", strtotime($row['consultation_date']))) ?></td>
+                  <td class="px-4 py-3"><?= htmlspecialchars($row['lawyer_name']) ?></td>
+                  <td class="px-4 py-3"><?= htmlspecialchars($row['profession']) ?></td>
+                  <td class="px-4 py-3"><?= htmlspecialchars($row['day']) ?></td>
+                  <td class="px-4 py-3"><?= htmlspecialchars($row['time']) ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="6" class="px-4 py-6 text-center text-gray-500">
+                  No consultation data available.
+                </td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="flex justify-center items-center space-x-2 mt-6">
-        <button class="px-3 py-1 border rounded-lg text-gray-600 hover:bg-gray-200">&lt; Previous</button>
-        <span class="px-3 py-1 border rounded-lg bg-black text-white">1</span>
-        <span class="px-3 py-1 border rounded-lg hover:bg-gray-200">2</span>
-        <span class="px-3 py-1 border rounded-lg hover:bg-gray-200">3</span>
-        <span class="px-3 py-1">...</span>
-        <span class="px-3 py-1 border rounded-lg hover:bg-gray-200">67</span>
-        <span class="px-3 py-1 border rounded-lg hover:bg-gray-200">68</span>
-        <button class="px-3 py-1 border rounded-lg text-gray-600 hover:bg-gray-200">Next &gt;</button>
       </div>
     </main>
   </div>

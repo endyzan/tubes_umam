@@ -1,3 +1,33 @@
+<?php
+session_start();
+require_once '../../config.php';
+
+// Proteksi akses login
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit;
+}
+
+try {
+    // Ambil data jadwal lawyer beserta profesinya
+    $stmt = $pdo->query("
+        SELECT 
+            ls.lawyer_username, 
+            l.profession,
+            ls.day, 
+            ls.start_time, 
+            ls.end_time
+        FROM lawyer_schedule ls
+        JOIN lawyers l ON l.full_name = ls.lawyer_username
+        ORDER BY ls.id DESC
+    ");
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Terjadi kesalahan: " . $e->getMessage());
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +77,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
+        <button onclick="window.location.href='../../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -64,47 +94,36 @@
           <thead class="bg-gray-200">
             <tr>
               <th class="px-6 py-3 font-semibold">Lawyer Name</th>
-              <th class="px-6 py-3 font-semibold">Consule Date</th>
               <th class="px-6 py-3 font-semibold">Profession</th>
               <th class="px-6 py-3 font-semibold">Day</th>
               <th class="px-6 py-3 font-semibold">Time</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-t">
-              <td class="px-6 py-4">Tonno Sutono</td>
-              <td class="px-6 py-4">15 September 2025</td>
-              <td class="px-6 py-4">Pidana</td>
-              <td class="px-6 py-4">Monday</td>
-              <td class="px-6 py-4">13.00</td>
+        <?php if (count($result) > 0): ?>
+            <?php foreach ($result as $row): ?>
+                <tr class="border-t">
+                    <td class="px-6 py-4"><?= htmlspecialchars($row['lawyer_username']) ?></td>
+                    <td class="px-6 py-4"><?= htmlspecialchars($row['profession']) ?></td>
+                    <td class="px-6 py-4"><?= htmlspecialchars($row['day']) ?></td>
+                    <td class="px-6 py-4"><?= htmlspecialchars($row['start_time']) ?> - <?= htmlspecialchars($row['end_time']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4" class="px-6 py-4 text-center text-gray-500">Belum ada jadwal.</td>
             </tr>
-            <tr class="border-t">
-              <td class="px-6 py-4">Suparto Karto</td>
-              <td class="px-6 py-4">16 September 2025</td>
-              <td class="px-6 py-4">Advokat</td>
-              <td class="px-6 py-4">Tuesday</td>
-              <td class="px-6 py-4">13.30</td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-6 py-4">Lailul Subianto</td>
-              <td class="px-6 py-4">16 September 2025</td>
-              <td class="px-6 py-4">Corporate</td>
-              <td class="px-6 py-4">Tuesday</td>
-              <td class="px-6 py-4">14.00</td>
-            </tr>
+        <?php endif; ?>
           </tbody>
         </table>
       </div>
 
       <!-- Pagination -->
-      <!-- Pagination (di luar kotak) -->
-      <div class="flex items-center justify-between mt-6">
-        <!-- Previous -->
+      <!-- <div class="flex items-center justify-between mt-6">
         <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
           <span class="mr-1">&lt;</span> Previous
         </button>
 
-        <!-- Page Numbers -->
         <div class="flex items-center space-x-2 text-gray-700">
           <span class="px-3 py-1 rounded bg-black text-white text-sm">1</span>
           <span class="px-2">2</span>
@@ -114,11 +133,10 @@
           <span class="px-2">68</span>
         </div>
 
-        <!-- Next -->
         <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
           Next <span class="ml-1">&gt;</span>
         </button>
-      </div>
+      </div> -->
     </main>
   </div>
 

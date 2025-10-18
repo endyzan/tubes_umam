@@ -1,3 +1,24 @@
+<?php
+session_start();
+require_once '../../config.php';
+
+// Cek login dan role
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'Lawyer') {
+  header("Location: ../../login.php");
+  exit;
+}
+
+try {
+  // Ambil semua jadwal konsultasi dari database
+  $stmt = $pdo->query("SELECT * FROM consultation_schedule ORDER BY created_at ASC");
+  $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+  die("Query gagal: " . $e->getMessage());
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +68,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
+        <button onclick="window.location.href='../../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -58,72 +79,52 @@
     <main class="flex-1 p-12">
       <h1 class="text-3xl font-bold mb-8">Consultation History</h1>
 
-      <!-- Table -->
       <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
         <table class="w-full text-left border-collapse">
           <thead class="bg-gray-200">
             <tr>
               <th class="px-6 py-3 font-semibold">ID</th>
               <th class="px-6 py-3 font-semibold">Customer Name</th>
+              <th class="px-6 py-3 font-semibold">Profession</th>
+              <th class="px-6 py-3 font-semibold">Lawyer</th>
               <th class="px-6 py-3 font-semibold">Date</th>
               <th class="px-6 py-3 font-semibold">Day</th>
               <th class="px-6 py-3 font-semibold">Time</th>
-              <th class="px-6 py-3 font-semibold">Action</th>
+              <th class="px-6 py-3 font-semibold">Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-t">
-              <td class="px-6 py-4">5764890</td>
-              <td class="px-6 py-4">Supriadi Juli</td>
-              <td class="px-6 py-4">15 September 2025</td>
-              <td class="px-6 py-4">Monday</td>
-              <td class="px-6 py-4">13.00</td>
-              <td class="px-6 py-4">
-                <span class="bg-green-500 text-white px-3 py-1 rounded">Approved</span>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-6 py-4">5764890</td>
-              <td class="px-6 py-4">Adriawan Lex</td>
-              <td class="px-6 py-4">16 September 2025</td>
-              <td class="px-6 py-4">Tuesday</td>
-              <td class="px-6 py-4">13.30</td>
-              <td class="px-6 py-4">
-                <span class="bg-red-500 text-white px-3 py-1 rounded">Denied</span>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-6 py-4">5764890</td>
-              <td class="px-6 py-4">Budi Banteran</td>
-              <td class="px-6 py-4">16 September 2025</td>
-              <td class="px-6 py-4">Tuesday</td>
-              <td class="px-6 py-4">14.00</td>
-              <td class="px-6 py-4">
-                <span class="bg-green-500 text-white px-3 py-1 rounded">Approved</span>
-              </td>
-            </tr>
+            <?php if (count($consultations) > 0): ?>
+              <?php foreach ($consultations as $row): ?>
+                <?php
+                  $statusClass = match($row['status']) {
+                    'Accepted' => 'bg-green-500 text-white',
+                    'Rejected' => 'bg-red-500 text-white',
+                    default => 'bg-gray-400 text-white'
+                  };
+                ?>
+                <tr class="border-t hover:bg-gray-50">
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['id']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['customer_name']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['profession']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['lawyer_name']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['consultation_date']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['day']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['time']) ?></td>
+                  <td class="px-6 py-4">
+                    <span class="px-3 py-1 rounded <?= $statusClass ?>">
+                      <?= htmlspecialchars($row['status']) ?>
+                    </span>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="8" class="text-center py-6 text-gray-500">No consultation records found.</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="flex items-center justify-between mt-6">
-        <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
-          <span class="mr-1">&lt;</span> Previous
-        </button>
-
-        <div class="flex items-center space-x-2 text-gray-700">
-          <span class="px-3 py-1 rounded bg-black text-white text-sm">1</span>
-          <span class="px-2">2</span>
-          <span class="px-2">3</span>
-          <span class="px-2">...</span>
-          <span class="px-2">67</span>
-          <span class="px-2">68</span>
-        </div>
-
-        <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
-          Next <span class="ml-1">&gt;</span>
-        </button>
       </div>
     </main>
   </div>

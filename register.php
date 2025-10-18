@@ -3,25 +3,53 @@ session_start();
 include "config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $conn->real_escape_string($_POST['username']);
-    $email    = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-    $role     = "Customer"; // default kalau dari register
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password_plain = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $role = "Customer"; // Default role
 
-    $sql = "INSERT INTO users (username, email, password, role) 
-            VALUES ('$username', '$email', '$password', '$role')";
+    // Validasi konfirmasi password
+    if ($password_plain !== $confirm_password) {
+        echo "<script>alert('❌ Password dan konfirmasi password tidak cocok!'); window.history.back();</script>";
+        exit;
+    }
 
-    if ($conn->query($sql) === TRUE) {
+    // Cek apakah username atau email sudah terdaftar
+    $check = $pdo->prepare("SELECT * FROM users WHERE username = :username OR email = :email LIMIT 1");
+    $check->execute(['username' => $username, 'email' => $email]);
+    if ($check->fetch()) {
+        echo "<script>alert('⚠️ Username atau Email sudah terdaftar! Silakan gunakan yang lain.'); window.history.back();</script>";
+        exit;
+    }
+
+    // Hash password
+    $hashed_password = password_hash($password_plain, PASSWORD_BCRYPT);
+
+    // Simpan ke database
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) 
+                           VALUES (:username, :email, :password, :role)");
+
+    try {
+        $stmt->execute([
+            'username' => $username,
+            'email' => $email,
+            'password' => $hashed_password,
+            'role' => $role
+        ]);
+
+        // Setelah register sukses → login otomatis
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
+
+        // Redirect ke login
         header("Location: login.php");
         exit;
-    } else {
-        echo "Error: " . $conn->error;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

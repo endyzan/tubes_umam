@@ -1,3 +1,31 @@
+<?php
+session_start();
+require_once '../../config.php';
+
+// Proteksi halaman
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit;
+}
+if ($_SESSION['role'] !== 'Administrator') {
+    header("Location: ../login.php");
+    exit;
+}
+
+// Proses hapus data
+if (isset($_GET['delete_id'])) {
+    $id = $_GET['delete_id'];
+    $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id AND role = 'Customer'");
+    $stmt->execute(['id' => $id]);
+    header("Location: customer-data.php");
+    exit;
+}
+
+// Ambil data customer
+$stmt = $pdo->query("SELECT id, username, email, created_at FROM users WHERE role = 'Customer' ORDER BY id DESC");
+$customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,10 +67,12 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
-          class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
-          Log-out
-        </button>
+        <form action="../../logout.php" method="POST">
+          <button type="submit" 
+            class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
+            Log-out
+          </button>
+        </form>
       </div>
     </aside>
 
@@ -54,127 +84,47 @@
         <table class="w-full text-left border-collapse">
           <thead class="bg-gray-200">
             <tr>
-              <th class="py-3 px-4">ID</th>
-              <th class="py-3 px-4">Customer Name</th>
-              <th class="py-3 px-4">Address</th>
-              <th class="py-3 px-4">Phone No.</th>
-              <th class="py-3 px-4">Action</th>
+              <th class="py-3 px-4">#</th>
+              <th class="py-3 px-4">Username</th>
+              <th class="py-3 px-4">Email</th>
+              <th class="py-3 px-4">Created At</th>
+              <th class="py-3 px-4 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-b">
-              <td class="py-3 px-4">5764890</td>
-              <td class="py-3 px-4">Supriadi Juli</td>
-              <td class="py-3 px-4">Jl. Rungkut Indah 19</td>
-              <td class="py-3 px-4">+62824989131</td>
-              <td class="py-3 px-4 space-x-2">
-                <button onclick="window.location.href='./edit-customer.php'" 
-                  class="bg-black text-white px-3 py-1 rounded">
-                  Edit
-                </button>
-
-                <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="py-3 px-4">5764890</td>
-              <td class="py-3 px-4">Adriawan Lex</td>
-              <td class="py-3 px-4">Jl. Kendangsari XI/5</td>
-              <td class="py-3 px-4">+62822134145</td>
-              <td class="py-3 px-4 space-x-2">
-                <button onclick="window.location.href='./edit-customer.php'" 
-                  class="bg-black text-white px-3 py-1 rounded">
-                  Edit
-                </button>
-
-                <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-3 px-4">5764890</td>
-              <td class="py-3 px-4">Budi Banteran</td>
-              <td class="py-3 px-4">Jl. Graha Famili V/1</td>
-              <td class="py-3 px-4">+62814415215</td>
-              <td class="py-3 px-4 space-x-2">
-                <button onclick="window.location.href='./edit-customer.php'" 
-                  class="bg-black text-white px-3 py-1 rounded">
-                  Edit
-                </button>
-
-                <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
-              </td>
-            </tr>
+            <?php if (count($customers) > 0): ?>
+              <?php foreach ($customers as $index => $customer): ?>
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="py-3 px-4"><?= $index + 1 ?></td>
+                  <td class="py-3 px-4"><?= htmlspecialchars($customer['username']) ?></td>
+                  <td class="py-3 px-4"><?= htmlspecialchars($customer['email']) ?></td>
+                  <td class="py-3 px-4"><?= htmlspecialchars($customer['created_at']) ?></td>
+                  <td class="py-3 px-4 text-center">
+                    <button onclick="confirmDelete(<?= $customer['id'] ?>)" 
+                      class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="5" class="py-4 text-center text-gray-500">No customer data found.</td>
+              </tr>
+            <?php endif; ?>
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="flex justify-between items-center mt-4">
-        <button class="bg-black text-white px-3 py-1 rounded hover:bg-gray-700">&lt; Previous</button>
-        <div class="space-x-2">
-          <button class="px-3 py-1 rounded bg-black text-white">1</button>
-          <button class="px-3 py-1 rounded hover:bg-gray-200">2</button>
-          <button class="px-3 py-1 rounded hover:bg-gray-200">3</button>
-          <span>...</span>
-          <button class="px-3 py-1 rounded hover:bg-gray-200">67</button>
-          <button class="px-3 py-1 rounded hover:bg-gray-200">68</button>
-        </div>
-        <button class="bg-black text-white px-3 py-1 rounded hover:bg-gray-700">Next &gt;</button>
       </div>
     </main>
   </div>
 
-
-    <!-- Modal (hidden secara default) -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
-        <div class="flex items-center mb-4">
-        <i class="fa-solid fa-circle-info text-blue-500 text-2xl mr-2"></i>
-        <h2 class="text-xl font-bold">Important!</h2>
-        </div>
-        <p class="text-gray-600 mb-6">Are you sure, you want to delete customer data?</p>
-        <div class="flex justify-end space-x-3">
-        <button id="cancelBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-            Cancel
-        </button>
-        <button id="confirmDeleteBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
-            Delete
-        </button>
-        </div>
-    </div>
-    </div>
-
-    <script>
-    // Ambil semua tombol delete
-    const deleteButtons = document.querySelectorAll(".bg-red-600");
-    const modal = document.getElementById("deleteModal");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-
-    let selectedRow = null;
-
-    deleteButtons.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-        selectedRow = e.target.closest("tr"); // simpan row yang dipilih
-        modal.classList.remove("hidden"); // tampilkan modal
-        });
-    });
-
-    // Tombol cancel -> tutup modal
-    cancelBtn.addEventListener("click", () => {
-        modal.classList.add("hidden");
-        selectedRow = null;
-    });
-
-    // Tombol confirm delete -> hapus row
-    confirmDeleteBtn.addEventListener("click", () => {
-        if (selectedRow) {
-        selectedRow.remove(); // hapus baris customer
-        }
-        modal.classList.add("hidden"); // tutup modal
-    });
-    </script>
-
+  <script>
+    function confirmDelete(id) {
+      if (confirm("Are you sure you want to delete this customer?")) {
+        window.location.href = "customer-data.php?delete_id=" + id;
+      }
+    }
+  </script>
 
 </body>
 </html>

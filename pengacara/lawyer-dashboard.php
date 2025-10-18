@@ -1,6 +1,17 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+if ($_SESSION['role'] !== 'Lawyer') {
+    header("Location: ../login.php");
+    exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +62,7 @@ session_start();
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../login.php'" 
+        <button onclick="window.location.href='../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>

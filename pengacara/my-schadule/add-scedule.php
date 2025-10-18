@@ -1,3 +1,39 @@
+<?php
+session_start();
+require '../../config.php';
+
+// Proteksi halaman
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit;
+}
+
+// Simpan data jika form disubmit
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $lawyer = $_SESSION['username'];
+    $day = $_POST['day'];
+    $start = $_POST['start'];
+    $finished = $_POST['finished'];
+
+    $sql = "INSERT INTO lawyer_schedule (lawyer_username, day, start_time, end_time)
+            VALUES (:lawyer, :day, :start, :finished)";
+    $stmt = $pdo->prepare($sql);
+
+    try {
+        $stmt->execute([
+            ':lawyer' => $lawyer,
+            ':day' => $day,
+            ':start' => $start,
+            ':finished' => $finished
+        ]);
+        echo "<script>alert('Jadwal berhasil ditambahkan!'); window.location.href='my-schedule.php';</script>";
+    } catch (PDOException $e) {
+        echo "<script>alert('Gagal menambahkan jadwal: " . $e->getMessage() . "');</script>";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +83,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
+        <button onclick="window.location.href='../../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -60,44 +96,53 @@
         <div class="bg-white shadow-lg rounded-2xl p-8 mt-6 max-w-xl">
         <h2 class="text-xl font-bold mb-6">Add Working Schedule</h2>
 
-        <form action="#" method="POST" class="space-y-6">
-            <!-- Day -->
-            <div>
+        <form action="" method="POST" class="space-y-6">
+        <!-- Day -->
+        <div>
             <label for="day" class="block text-sm font-semibold mb-2">Day</label>
-            <div class="relative">
-                <input type="date" id="day" name="day" 
-                    class="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
-            </div>
-            </div>
+            <select id="day" name="day" required
+                class="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
+                <option value="">-- Select Day --</option>
+                <option value="Senin">Senin</option>
+                <option value="Selasa">Selasa</option>
+                <option value="Rabu">Rabu</option>
+                <option value="Kamis">Kamis</option>
+                <option value="Jumat">Jumat</option>
+            </select>
+        </div>
 
-            <!-- Working Time Start -->
-            <div>
+        <!-- Working Time Start -->
+        <div>
             <label for="start" class="block text-sm font-semibold mb-2">Working Time - Start</label>
-            <div class="relative">
-                <input type="time" id="start" name="start" 
-                    class="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
-            </div>
-            </div>
+            <select id="start" name="start" required
+                class="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
+                <option value="">-- Select Start Time --</option>
+                <option value="08.00">08.00</option>
+                <option value="10.00">10.00</option>
+                <option value="13.00">13.00</option>
+                <option value="15.00">15.00</option>
+            </select>
+        </div>
 
-            <!-- Working Time Finished -->
-            <div>
+        <!-- Working Time Finished -->
+        <div>
             <label for="finished" class="block text-sm font-semibold mb-2">Working Time - Finished</label>
-            <div class="relative">
-                <input type="time" id="finished" name="finished" 
-                    class="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
-            </div>
-            </div>
+            <select id="finished" name="finished" required
+                class="w-full px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
+                <option value="">-- Select Finish Time --</option>
+                <option value="10.00">10.00</option>
+                <option value="12.00">12.00</option>
+                <option value="15.00">15.00</option>
+                <option value="17.00">17.00</option>
+            </select>
+        </div>
 
-            <!-- Buttons -->
-            <div class="flex justify-end space-x-4">
-            <a href="./my-schedule.php" type="reset" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                Cancel
-            </a>
-            <a href="./my-schedule.php" type="submit" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
-                Submit
-            </a>
-            </div>
-        </form>
+        <div class="flex justify-end space-x-4">
+            <a href="./my-schedule.php" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Cancel</a>
+            <button type="submit" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Submit</button>
+        </div>
+    </form>
+
         </div>
 
     </main>

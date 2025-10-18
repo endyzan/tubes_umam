@@ -1,3 +1,34 @@
+<?php
+session_start();
+require_once '../../config.php';
+
+// Proteksi login
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit;
+}
+
+// Ambil username lawyer dari sesi
+$lawyer_username = $_SESSION['username'];
+
+try {
+    // Query ambil jadwal + profesi berdasarkan username
+    $stmt = $pdo->prepare("
+        SELECT ls.*, l.profession
+        FROM lawyer_schedule ls
+        JOIN users u ON ls.lawyer_username = u.username
+        JOIN lawyers l ON l.user_id = u.id
+        WHERE ls.lawyer_username = :lawyer_username
+        ORDER BY ls.id DESC
+    ");
+    $stmt->execute(['lawyer_username' => $lawyer_username]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Terjadi kesalahan: " . $e->getMessage());
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +78,7 @@
       </div>
 
       <div class="p-6">
-        <button onclick="window.location.href='../../login.php'" 
+        <button onclick="window.location.href='../../logout.php'" 
           class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 font-semibold">
           Log-out
         </button>
@@ -67,7 +98,6 @@
           <thead class="bg-gray-200">
             <tr>
               <th class="px-6 py-3 font-semibold">Lawyer Name</th>
-              <th class="px-6 py-3 font-semibold">Consule Date</th>
               <th class="px-6 py-3 font-semibold">Profession</th>
               <th class="px-6 py-3 font-semibold">Day</th>
               <th class="px-6 py-3 font-semibold">Time</th>
@@ -75,57 +105,24 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="border-t">
-              <td class="px-6 py-4">Tonno Sutono</td>
-              <td class="px-6 py-4">15 Sept 2025</td>
-              <td class="px-6 py-4">Pidana</td>
-              <td class="px-6 py-4">Monday</td>
-              <td class="px-6 py-4">13.00</td>
-              <td class="px-6 py-4 space-x-2">
-                <button onclick="window.location.href='./edit-schedule.php'" 
-                  class="bg-black text-white px-3 py-1 rounded">
-                  Edit
-                </button>
-
-                <button class="bg-red-600 text-white px-3 py-1 rounded">Delete</button>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-6 py-4">Tonno Sutono</td>
-              <td class="px-6 py-4">16 Sept 2025</td>
-              <td class="px-6 py-4">Pidana</td>
-              <td class="px-6 py-4">Wednesday</td>
-              <td class="px-6 py-4">10.30</td>
-              <td class="px-6 py-4 space-x-2">
-                <button onclick="window.location.href='./edit-schedule.php'" 
-                  class="bg-black text-white px-3 py-1 rounded">
-                  Edit
-                </button>
-
-                <button class="bg-red-600 text-white px-3 py-1 rounded">Delete</button>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-6 py-4">Tonno Sutono</td>
-              <td class="px-6 py-4">17 Sept 2025</td>
-              <td class="px-6 py-4">Pidana</td>
-              <td class="px-6 py-4">Thursday</td>
-              <td class="px-6 py-4">15.00</td>
-              <td class="px-6 py-4 space-x-2">
-                <button onclick="window.location.href='./edit-schedule.php'" 
-                  class="bg-black text-white px-3 py-1 rounded">
-                  Edit
-                </button>
-
-                <button class="bg-red-600 text-white px-3 py-1 rounded">Delete</button>
-              </td>
-            </tr>
+          <?php foreach ($result as $row) : ?>
+              <tr class="border-t">
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['lawyer_username']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['profession'] ?? '-') ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['day']) ?></td>
+                  <td class="px-6 py-4"><?= htmlspecialchars($row['start_time']) ?> - <?= htmlspecialchars($row['end_time']) ?></td>
+                  <td class="px-6 py-4 space-x-2">
+                      <a href="./edit-schedule.php?id=<?= $row['id'] ?>" class="bg-black text-white px-3 py-1 rounded">Edit</a>
+                      <a href="./delete-schedule.php?id=<?= $row['id'] ?>" onclick="return confirm('Yakin hapus jadwal ini?')" class="bg-red-600 text-white px-3 py-1 rounded">Delete</a>
+                  </td>
+              </tr>
+          <?php endforeach; ?>
           </tbody>
         </table>
       </div>
 
       <!-- Pagination -->
-      <div class="flex items-center justify-between mt-6">
+      <!-- <div class="flex items-center justify-between mt-6">
         <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
           <span class="mr-1">&lt;</span> Previous
         </button>
@@ -141,57 +138,9 @@
 
         <button class="flex items-center px-3 py-1 text-sm bg-black text-white rounded hover:opacity-80">
           Next <span class="ml-1">&gt;</span>
-        </button>
+        </button> -->
       </div>
     </main>
   </div>
-
-  <!-- Modal -->
-  <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
-      <div class="flex items-center mb-4">
-        <i class="fa-solid fa-circle-info text-blue-500 text-2xl mr-2"></i>
-        <h2 class="text-xl font-bold">Important!</h2>
-      </div>
-      <p class="text-gray-600 mb-6">Are you sure, you want to delete this schedule?</p>
-      <div class="flex justify-end space-x-3">
-        <button id="cancelBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-          Cancel
-        </button>
-        <button id="confirmDeleteBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
-          Delete
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const deleteButtons = document.querySelectorAll(".bg-red-600");
-    const modal = document.getElementById("deleteModal");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-
-    let selectedRow = null;
-
-    deleteButtons.forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        selectedRow = e.target.closest("tr");
-        modal.classList.remove("hidden");
-      });
-    });
-
-    cancelBtn.addEventListener("click", () => {
-      modal.classList.add("hidden");
-      selectedRow = null;
-    });
-
-    confirmDeleteBtn.addEventListener("click", () => {
-      if (selectedRow) {
-        selectedRow.remove();
-      }
-      modal.classList.add("hidden");
-    });
-  </script>
-
 </body>
 </html>
