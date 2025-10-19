@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 18, 2025 at 07:57 AM
+-- Generation Time: Oct 19, 2025 at 11:02 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.27
 
@@ -100,7 +100,8 @@ CREATE TABLE `lawyer_schedule` (
 INSERT INTO `lawyer_schedule` (`id`, `lawyer_id`, `lawyer_username`, `day`, `start_time`, `end_time`, `created_at`) VALUES
 (2, 10, 'lawyersatu', 'Senin', '08.00', '10.00', '2025-10-16 09:19:34'),
 (3, 11, 'lawyerdua', 'Selasa', '08.00', '15.00', '2025-10-16 09:36:14'),
-(4, 11, 'lawyerdua', 'Rabu', '13.00', '15.00', '2025-10-16 09:36:26');
+(4, 11, 'lawyerdua', 'Rabu', '13.00', '15.00', '2025-10-16 09:36:26'),
+(5, NULL, 'lawyersatu', 'Senin', '08.00', '10.00', '2025-10-19 10:49:49');
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,7 @@ ALTER TABLE `lawyers`
 -- AUTO_INCREMENT for table `lawyer_schedule`
 --
 ALTER TABLE `lawyer_schedule`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
